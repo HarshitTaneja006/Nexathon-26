@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import { Calendar, MapPin, Users, Terminal, Sparkles } from "lucide-react"
 import Link from "next/link"
+import { useLenis } from "@/components/providers/smooth-scroll-provider"
 import FloatingParticles from "@/components/features/floating-particles"
 import { ShaderAnimation } from "@/components/ui/shader-animation"
 import { heroData, eventInfo } from "@/lib/data"
@@ -34,6 +35,7 @@ useEffect(() => {
 
   return () => observer.disconnect()
 }, [])
+  const lenis = useLenis()
 
   useEffect(() => {
     setMounted(true)
@@ -247,6 +249,25 @@ useEffect(() => {
 </div>
 
 
+        <div
+          className={`absolute bottom-10 left-1/2 -translate-x-1/2 transition-all duration-1000 delay-700 ${
+            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
+        >
+          <Link
+            href="#about"
+            onClick={(e) => {
+              e.preventDefault()
+              lenis?.scrollTo("#about", { duration: 1.2 })
+            }}
+            className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors duration-300 group"
+          >
+            <span className="font-[var(--font-space)] text-xs tracking-widest uppercase">Scroll to explore</span>
+            <div className="w-6 h-10 border-2 border-current rounded-full flex justify-center pt-2 group-hover:border-primary transition-colors duration-300">
+              <div className="w-1 h-2 bg-current rounded-full animate-bounce group-hover:bg-primary" />
+            </div>
+          </Link>
+        </div>
       </div>
 
       <style jsx>{`
